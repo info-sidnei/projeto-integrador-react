@@ -25,11 +25,11 @@ function HomePage() {
   }
 
   return (
-    <body>
+    <div>
       <header>
-        <button className='clear' onClick={logout}>Sair</button>
-      </header>
-      <main className='centralize'>
+      <button className='clear' onClick={logout}>Sair</button>
+      </header>      
+      <main className='centralize'>      
         <h1>Bem vindo ao PharmaPlain!</h1>
         <div className='home'>
         <article>
@@ -43,8 +43,7 @@ function HomePage() {
         <button className='consultdata' onClick={Consult}>Consultar</button>
         </div>
       </main>
-    </body>
-
+    </div>   
   )
 }
 export default HomePage;

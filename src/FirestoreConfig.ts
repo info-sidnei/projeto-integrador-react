@@ -1,5 +1,8 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection } from "firebase/firestore";
+import { initializeApp } from 'firebase/app';
+// eslint-disable-next-line import/first
+import { getFirestore, collection } from 'firebase/firestore';
+export default collection;
+
 
 
 const firebaseConfig = {
@@ -15,6 +18,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 //Inicialize o firestore
-export const db = getFirestore();
-export default collection;
-
+export const db = getFirestore(app);

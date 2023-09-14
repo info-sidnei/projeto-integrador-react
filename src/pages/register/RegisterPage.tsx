@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/auth/AuthContext';
 import ValidationError from './../../components/validation-error/ValidationError';
 
-
 function RegisterPage() {
     const {authService}: {authService: AuthService} = useAuthContext();
 

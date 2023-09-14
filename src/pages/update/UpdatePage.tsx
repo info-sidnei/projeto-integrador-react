@@ -1,55 +1,66 @@
-import { addDoc } from 'firebase/firestore'
-import { db } from '../../FirebaseConfig'
+import {db} from '../../FirestoreConfig'
 import Loading from '../../components/loading/Loading';
+import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../contexts/auth/AuthContext';
+import AuthService from '../../services/AuthService';
 
 
 function UpdatePage() {
 
+  // Create an initial document to update.
+  const { authService }: { authService: AuthService } = useAuthContext();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null as any);
+  const [showLoading, setShowLoading] = useState(false);
+
+
+  const updateData = async () => {
+
+    setShowLoading(true);
+
+    // const expectorRef = doc(db, "expectorante", "AMBROL");
+    // setDoc(expectorRef, {
+    //   name: "AMBROL",
+    //   preco: "16.68",
+    //   tarja: "PRETA"
+    // });
+    // console.log(expectorRef)
+
+    // To update age and favorite color:
+    // updateDoc(expectorRef, {
+    //   "nome": "AMBROL",
+    //   "preco": 13.98,
+    //   "tarja": "VERMELHA"
+    // }).then(response => {
+    //   setShowLoading(false)
+    //   console.log('Dados Alterados')
+    //   alert('Dados Atualizados com sucesso!');
+    //   navigate('../update');
+
+    // })
+    //   .catch(error => {
+    //     setShowLoading(true)
+    //     alert(error.code)
+    //     setError(error);
+    //   });
+
+    // console.log(expectorRef)
+    // Array.from(document.querySelectorAll("input")).forEach(
+    //   input => (input.value = "")
+    // );
+  }
+
+
+
   return (
     <>
-      <body>
-        <header>
+      <main>
+        <h1>Bem vindo ao PharmaPlain!</h1>
 
-        </header>
-        <main>
-          <h1>Bem vindo ao PharmaPlain!</h1>
-          <div >
-            <h4>Adicione um novo produto!:</h4>
-          </div>
-
-          <form>
-            <label>Medicamento</label><br></br>
-            <input id="medicamento" name="medicamento"></input><br></br>
-
-            <label>Produto:</label>
-            <input type="text" ></input>
-
-            <label>Laboratório</label>
-            <input type="text" ></input>
-
-            <label>Substância:</label>
-            <input type="text" ></input>
-
-            <label>Apresentação:</label>
-            <input type="text" ></input>
-
-            <label>Classe Terapêutica:</label>
-            <input type="text" ></input>
-
-            <label>Tarja</label>
-            <input type="text" ></input>
-
-            <label>Preço médio</label>
-            <input type="text" ></input>
-
-            <button>enviar</button>
-
-
-          </form>
-        </main>
-        {<Loading />}
-
-      </body>
+      </main>
+      {<Loading />}
     </>
   )
 }

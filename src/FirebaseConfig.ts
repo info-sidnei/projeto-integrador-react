@@ -1,7 +1,6 @@
 const {initializeApp} = require ('firebase/app')
 const {initializeAuth} = require ('firebase/auth')
 const { browserLocalPersistence } = require ('firebase/auth')
-const {getFirestore} = require ('firebase/firestore')
 
 
 const firebaseConfig = {
@@ -19,8 +18,6 @@ export const app = initializeApp(firebaseConfig);
 export const auth = initializeAuth(app, {
     persistence: browserLocalPersistence
 });
-
-export const db = getFirestore();
 
 
 

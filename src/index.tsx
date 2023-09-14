@@ -12,9 +12,9 @@ const root = ReactDOM.createRoot(
 const authService = new AuthService();
 root.render(
   <React.StrictMode>
-  <AuthProvider authService={authService}>  
-    <App />
-  </AuthProvider>  
+    <AuthProvider authService={authService}>
+      <App />
+    </AuthProvider>
   </React.StrictMode>
 );
 

@@ -1,4 +1,4 @@
-export interface ITask {
+export interface ISearch {
     nome: string,
     laboratorio: string,
     substancias: string,

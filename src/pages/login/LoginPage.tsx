@@ -39,7 +39,6 @@ function LoginPage() {
       })
       .catch(error => {
         setShowLoading(false);        
-        setError(error);
         alert('Email ou senha Inválidos!');
       });
   }
@@ -64,40 +63,40 @@ function LoginPage() {
 
   return (
     <main className='centralize'>
-      <div className='cadastro'>
-        <h4>Entre com seus dados abaixo:</h4>
-      </div>
       <form>
+            <div className='cadastro'>
+              <h4>Entre com seus dados abaixo:</h4>
+            </div>
         {/*-----------------------------------------*/}
-        <div>
-          <input
-            type="email"
-            placeholder='Email'
-            value={form.email.value}
-            onChange={event => setForm({
-              ...form, email: {
-                hasChanged: true, value: event.target.value
-              }
-            })}
-            data-testid="email" />
+       
+            <input
+              type="email"
+              placeholder='Email'
+              value={form.email.value}
+              onChange={event => setForm({
+                ...form, email: {
+                  hasChanged: true, value: event.target.value
+                }
+              })}
+              data-testid="email" />
 
-          <ValidationError
-            hasChanged={form.email.hasChanged}
-            errorMessage='Email é obrigatòrio'
-            testId='email-required'
-            type='required'
-            value={form.email.value} />
+            <ValidationError
+              hasChanged={form.email.hasChanged}
+              errorMessage='Email é obrigatòrio'
+              testId='email-required'
+              type='required'
+              value={form.email.value} />
 
-          <ValidationError
-            hasChanged={form.email.hasChanged}
-            errorMessage='Email é inválido'
-            testId='email-invalid'
-            type='email'
-            value={form.email.value} />
-        </div>
+            <ValidationError
+              hasChanged={form.email.hasChanged}
+              errorMessage='Email é inválido'
+              testId='email-invalid'
+              type='email'
+              value={form.email.value} />
+        
 
         {/*-----------------------------------------*/}
-        <div>
+        
           <input
             type="password"
             placeholder='Senha'
@@ -115,7 +114,7 @@ function LoginPage() {
             testId='password-required'
             type='required'
             value={form.password.value} />
-        </div>
+        
 
         {error && <div className='error' data-testid="error">{error.message}</div>}
 

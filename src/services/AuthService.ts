@@ -44,6 +44,7 @@ export default class AuthService {
     logout() {
         return firebaseAuth.signOut(auth); 
     }
+
     recoverPassword(email: string) {
         return firebaseAuth.sendPasswordResetEmail(auth, email);
     }

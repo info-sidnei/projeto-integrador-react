@@ -1,11 +1,10 @@
-import {db} from '../../FirestoreConfig';
+import { db } from '../../FirestoreConfig';
 import { collection, addDoc } from "firebase/firestore";
 import Loading from '../../components/loading/Loading';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CreatePage.module.css'; 
 import ValidationError from "../../components/validation-error/ValidationError";
-import styles from "./CreatePage.module.css"
 
 function CreatePage() {
 
@@ -45,8 +44,7 @@ function CreatePage() {
         hasChanged: false,
         value: ""
         },     
-      })      
-              
+      })            
         const nome = form.nome.value; 
         const laboratorio = form.laboratorio.value;
         const substancia = form.substancias.value; 
@@ -76,6 +74,7 @@ function CreatePage() {
         setShowLoading(false)
         alert('Dados Cadastrados com sucesso!');
         navigate('../create');
+        
       
        })
        .catch(error => {
@@ -92,14 +91,14 @@ function CreatePage() {
     <>
         <body>
             <main className='centralize'>
-              <h1>Bem vindo ao PharmaPlain!</h1>
+            <h1>Bem vindo ao PharmaPlain!</h1>
               <div >
                 <h2>Adicione um novo produto:</h2>
               </div>
               <form>    
                 <div>
                 <label htmlFor='nome'>Nome do Medicamento</label><br></br>
-                <input className='buscador' 
+                <input className='criador' 
                 type='text'
                 required
                 name='nome'
@@ -118,7 +117,7 @@ function CreatePage() {
 
                 <div>
                 <label htmlFor='laboratorio'>Laboratório</label>
-                <input className='buscador'
+                <input className='criador'
                 type='text'
                 required
                 name='laboratorio'
@@ -137,7 +136,7 @@ function CreatePage() {
                 
                 <div>
                 <label htmlFor='substancias'>Substâncias:</label>
-                <input className='buscador'
+                <input className='criador'
                 type='text'
                 required
                 name="substancias"
@@ -156,7 +155,7 @@ function CreatePage() {
 
                 <div>
                 <label htmlFor='indicacao'>Indicação:</label>
-                <input className='buscador'
+                <input className='criador'
                 type='text'
                 required
                 name='indicacao'
@@ -175,7 +174,7 @@ function CreatePage() {
                 
                 <div>
                 <label htmlFor='tarja'>Tarja</label>
-                <input className='buscador'
+                <input className='criador'
                 type='text'
                 required
                 name='tarja'
@@ -188,7 +187,7 @@ function CreatePage() {
 
                 <div>
                 <label htmlFor='apresentacao'>Apresentação:</label>
-                <input className='buscador'
+                <input className='criador'
                 type='text'
                 required
                 name='apresentacao'
@@ -207,7 +206,7 @@ function CreatePage() {
                 
                 <div>              
                 <label htmlFor='descricao'>Descrição:</label>
-                <input className='buscador'
+                <input className='criador'
                 type='text'
                 required
                 name='descricao'
@@ -220,7 +219,7 @@ function CreatePage() {
                 
                 <div>                            
                 <label htmlFor='preco'>Preço médio</label>
-                <input className='buscador'
+                <input className='criador'
                 type="text"
                 required
                 name='preco'

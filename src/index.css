@@ -27,16 +27,17 @@ form {
   display: flex;
   flex-direction: column;
   margin: 0x auto;
-
 }
-h1, h2, h3, h4, h5,
+
+h1,
+h2,
+h3,
+h4,
+h5,
 h6 {
-  margin-top: 20px;
+  color: #fcfcfc;
+  margin-top: 10px;
   margin-bottom: 10px;
-}
-
-h5.entre_dados {
-  color: #ffffff;
 }
 
 .centralize {
@@ -44,13 +45,18 @@ h5.entre_dados {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
-input,
+input, select,
 button {
+  display: block;
+  outline: none;
   padding: 10px;
-  width: -webkit-fill-available;
-  margin-top: 10px;
+  width: webkit-fill-available;
+  margin-bottom: 10px;
 }
 
 input {
@@ -58,7 +64,7 @@ input {
   border: none;
 }
 
-input.buscador {
+input.criador {
   margin-top: 0;
   margin-bottom: 10px;
 }
@@ -71,7 +77,6 @@ input.container {
 
 button {
   cursor: pointer;
-
 }
 
 button:active {
@@ -144,10 +149,12 @@ button.outline {
 }
 
 div.home {
-  text-align: center;
   display: flex;
   flex-direction: column;
-  width: 500px;
+  justify-content: center;
+  text-align: center;
+  width: 40%;
+  height: 100%;
 }
 
 div.cadastro {
@@ -157,6 +164,7 @@ div.cadastro {
 
 }
 
-label {
-  font-weight: bold;
+label.lat {
+  text-align: left;
+  font-weight:bold;
 }

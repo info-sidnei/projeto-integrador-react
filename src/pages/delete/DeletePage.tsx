@@ -1,5 +1,5 @@
 import {addDoc} from 'firebase/firestore'
-import {db} from '../../FirebaseConfig'
+import { db } from '../../FirestoreConfig'
 import Loading from '../../components/loading/Loading';
 
 
