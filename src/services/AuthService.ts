@@ -10,8 +10,10 @@ export default class AuthService {
             firebaseAuth.onAuthStateChanged(auth, (user: any) => {
                 resolve(user);
             })
-        })
+        })        
     }
+    
+    
 
     login(email: string, password: string) {
         return firebaseAuth.signInWithEmailAndPassword(

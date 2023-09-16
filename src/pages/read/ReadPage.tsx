@@ -1,13 +1,10 @@
-import { ChangeEvent, useState } from 'react';
-import { firestore } from 'firebase-admin';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/auth/AuthContext';
 import AuthService from '../../services/AuthService';
-import { ISearch } from '../../interfaces/Search';
 import { db } from '../../FirestoreConfig';
-import { doc, getDoc, limit, orderBy, query, collection, where, DocumentSnapshot, getDocs, FieldValue, FieldPath } from 'firebase/firestore';
+import { orderBy, query, collection, where, getDocs } from 'firebase/firestore';
 import './ReadPage.css'
-import { getValue } from '@testing-library/user-event/dist/utils';
 
 
 function ReadPage() {

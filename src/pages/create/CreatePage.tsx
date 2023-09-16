@@ -3,253 +3,396 @@ import { collection, addDoc } from "firebase/firestore";
 import Loading from '../../components/loading/Loading';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './CreatePage.module.css'; 
+import AuthService from '../../services/AuthService';
+import { useAuthContext } from '../../contexts/auth/AuthContext';
+import './CreatePage.css';
 import ValidationError from "../../components/validation-error/ValidationError";
+import { auth } from '../../FirebaseConfig';
+import { Select } from '@mui/material';
 
 function CreatePage() {
 
+  const { authService }: { authService: AuthService } = useAuthContext();
+
+  const navigate = useNavigate();
+
+  const home = () => { navigate('/home'); }
+
+  const read = () => { navigate('/read'); }
+
+  const update = () => { navigate('/update'); }
+
+  const deletar = () => { navigate('/delete'); }
+
+  const logout = () => {
+    authService.logout()
+    .then(() => {
+      navigate('/');
+    })
+  }
+
   //-------------------------------------------------//
-      const navigate = useNavigate();
-      
-      const [form, setForm] = useState({
-        nome: {
-        hasChanged: false,
-        value: ""
-        },
-        laboratorio: {
-        hasChanged: false,
-        value: ""
-        },
-        substancias: {
-        hasChanged: false,
-        value: ""
-        },
-        indicacao: {
-        hasChanged: false,
-        value: ""
-        },
-        tarja: {
-        hasChanged: false,
-        value: ""
-        },
-        apresentacao: {
-        hasChanged: false,
-        value: ""
-        },
-        descricao: {
-        hasChanged: false,
-        value: ""
-        },
-        preco: {
-        hasChanged: false,
-        value: ""
-        },     
-      })            
-        const nome = form.nome.value; 
-        const laboratorio = form.laboratorio.value;
-        const substancia = form.substancias.value; 
-        const indicacao = form.indicacao.value;
-        const tarja = form.tarja.value; 
-        const apresentacao = form.apresentacao.value;
-        const descricao = form.descricao.value; 
-        const preco = form.preco.value;
 
-        const [error, setError] = useState(null as any);
-        const [showLoading, setShowLoading] = useState(false);
-        
-    const handleClick = () => {
-      
-      setShowLoading(true);
+  interface FormData {
+    hasChanged: boolean;
+    value: string;
+    isDateValid?: boolean;
+  }
 
-      const dadosRef = addDoc(collection(db, "expectorante"), {        
-        nome: nome, 
-        laboratorio: laboratorio,
-        substancia: substancia, 
-        indicacao: indicacao,
-        tarja: tarja, 
-        apresentacao: apresentacao,
-        descricao: descricao, 
-        preco: preco
-      }).then(() => {
-        setShowLoading(false)
-        alert('Dados Cadastrados com sucesso!');
-        navigate('../create');
-        
-      
-       })
-       .catch(error => {
-        setShowLoading(false)
-        setError(error);
-       }); 
-          console.log(dadosRef)    
-          Array.from(document.querySelectorAll("input")).forEach(
-            input => (input.value = "")
-          );            
-    };
-                 
+  const [form, setForm] = useState({
+    type: { hasChanged: false, value: "" },
+    nome: { hasChanged: false, value: "" },
+    laboratorio: { hasChanged: false, value: "" },
+    indicacao: { hasChanged: false, value: "" },
+    substancia: { hasChanged: false, value: "" },
+    tarja: { hasChanged: false, value: "" },
+    apresentacao: { hasChanged: false, value: "" },
+    descricao: { hasChanged: false, value: "" },
+    currency: { hasChanged: false, value: "" },
+    value: { hasChanged: false, value: "" },
+    atualizado: { hasChanged: false, value: "" } as FormData
+  })
+
+
+  const type = form.type.value;
+  const nome = form.nome.value;
+  const laboratorio = form.laboratorio.value;
+  const indicacao = form.indicacao.value;
+  const substancia = form.substancia.value;
+  const tarja = form.tarja.value;
+  const apresentacao = form.apresentacao.value;
+  const descricao = form.descricao.value;
+  const currency = form.currency.value;
+  const value = parseFloat(form.value.value);
+  const atualizado = form.atualizado.value;
+
+  const [error, setError] = useState(null as any);
+  const [showLoading, setShowLoading] = useState(false);
+
+  const cancelClick = () => {
+    console.log(form)
+    console.log(type, nome, laboratorio, indicacao, substancia, tarja, apresentacao, descricao, currency, value, atualizado)
+  }
+
+  const handleClick = async () => {
+
+    setShowLoading(true);
+
+    const dadosRef = await addDoc(collection(db, 'medicamentos'), {
+      type: type,
+      nome: nome,
+      laboratorio: laboratorio,
+      indicacao: indicacao,
+      substancia: substancia,
+      tarja: tarja,
+      apresentacao: apresentacao,
+      descricao: descricao,
+      preco: {
+        currency: currency,
+        value: value
+      },
+      atualizado: atualizado,
+      user: {
+        uid: auth.currentUser.uid
+      }
+    }).then(() => {
+      setShowLoading(false)
+      alert('Dados Cadastrados com sucesso!');
+      navigate('../create');
+
+    }).catch(error => {
+      setShowLoading(false)
+      setError(error);
+    });
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
+    Array.from(document.querySelectorAll("select")).forEach(
+      select => (select.value = "")
+    );
+    console.log(dadosRef);
+  };
+
   return (
     <>
-        <body>
-            <main className='centralize'>
-            <h1>Bem vindo ao PharmaPlain!</h1>
-              <div >
-                <h2>Adicione um novo produto:</h2>
-              </div>
-              <form>    
-                <div>
-                <label htmlFor='nome'>Nome do Medicamento</label><br></br>
-                <input className='criador' 
-                type='text'
-                required
-                name='nome'
-                placeholder='Entre com o Nome'
-                onChange={event => setForm({...form, nome: {
-                hasChanged: true, value: event.target.value
-                }})}
-                /><br></br><br></br>
-                <ValidationError
-                hasChanged={form.nome.hasChanged}
-                errorMessage='Nome é obrigatório'
-                testId='nome-required'
-                type='required'
-                value={form.nome.value}/>
-                </div>
 
-                <div>
-                <label htmlFor='laboratorio'>Laboratório</label>
-                <input className='criador'
-                type='text'
-                required
-                name='laboratorio'
-                placeholder='Laboratório'
-                onChange={event => setForm({...form, laboratorio: {
+      <header>
+        <div className='menu-container'>
+          <button className='clear' onClick={home}>Home</button>
+          <button className='clear' onClick={read}>Pesquisar</button>
+          <button className='clear' onClick={update}>Update</button>
+          <button className='clear' onClick={deletar}>Deletar</button>
+          <button className='clear' onClick={logout}>Sair</button>
+        </div>
+      </header>
+      <main className='createlize'>
+        <h1>Bem vindo ao PharmaPlain!</h1>
+        <div >
+          <h2>Adicione um novo produto:</h2>
+        </div>
+        <form className='create'>
+          <div>
+            <label>Tipo de Medicamento *</label>
+            <select
+              name='type'
+              id='type'
+              onChange={event => setForm({
+                ...form, type: {
                   hasChanged: true, value: event.target.value
-                  }})}
-                /><br></br><br></br>
-                <ValidationError
-                hasChanged={form.laboratorio.hasChanged}
-                errorMessage='Laboratório é obrigatório'
-                testId='labor-required'
-                type='required'
-                value={form.laboratorio.value}/>
-                </div>
-                
-                <div>
-                <label htmlFor='substancias'>Substâncias:</label>
-                <input className='criador'
-                type='text'
-                required
-                name="substancias"
-                placeholder='Substâncias Utilizadas'
-                onChange={event => setForm({...form, substancias: {
-                  hasChanged: true, value: event.target.value
-                  }})}
-                /><br></br><br></br>
-                <ValidationError
-                hasChanged={form.substancias.hasChanged}
-                errorMessage='Substâncias é obrigatório'
-                testId='subst-required'
-                type='required'
-                value={form.substancias.value}/>
-                </div>
+                }
+              })}
+            >
+              <option value=''>-- Selecione um tipo --</option>
+              <option>Anticoncepcional</option>
+              <option>Calmantes</option>
+              <option>Disfunção-Erétil</option>
+              <option>Emagrecedores</option>
+              <option>Oftálmicos</option>
+              <option>Isentos-de-Prescrição</option>
+              <option>Uso-contínuo</option>
+              <option>Vitaminas</option>
+              <option>Outros</option>
+            </select>
+            <ValidationError
+              hasChanged={form.type.hasChanged}
+              errorMessage='Tipo de medicamento é obrigatório'
+              testId='type-required'
+              type='required'
+              value={form.type.value} />
+          </div>
 
-                <div>
-                <label htmlFor='indicacao'>Indicação:</label>
-                <input className='criador'
-                type='text'
-                required
-                name='indicacao'
-                placeholder='Indicação'
-                onChange={event => setForm({...form, indicacao: {
+          <div>
+            <label>Nome do Medicamento *</label>
+            <input className='create'
+              type='text'
+              name='nome'
+              placeholder='Entre com o Nome'
+              onChange={event => setForm({
+                ...form, nome: {
                   hasChanged: true, value: event.target.value
-                  }})}
-                /><br></br><br></br>
-                <ValidationError
-                hasChanged={form.indicacao.hasChanged}
-                errorMessage='Indicação é obrigatório'
-                testId='indicacao-required'
-                type='required'
-                value={form.indicacao.value}/>
-                </div>
-                
-                <div>
-                <label htmlFor='tarja'>Tarja</label>
-                <input className='criador'
-                type='text'
-                required
-                name='tarja'
-                placeholder='Cor da Tarja'
-                onChange={event => setForm({...form, tarja: {
-                  hasChanged: true, value: event.target.value
-                  }})}
-                /><br></br><br></br>
-                </div>
+                }
+              })}
+            />
+            <ValidationError
+              hasChanged={form.nome.hasChanged}
+              errorMessage='Nome é obrigatório'
+              testId='nome-required'
+              type='required'
+              value={form.nome.value} />
+          </div>
 
-                <div>
-                <label htmlFor='apresentacao'>Apresentação:</label>
-                <input className='criador'
-                type='text'
-                required
-                name='apresentacao'
-                placeholder='Apresentação'
-                onChange={event => setForm({...form, apresentacao: {
+          <div>
+            <label>Laboratório *</label>
+            <input className='create'
+              type='text'
+              name='laboratorio'
+              placeholder='Laboratório'
+              onChange={event => setForm({
+                ...form, laboratorio: {
                   hasChanged: true, value: event.target.value
-                  }})}
-                /><br></br><br></br>
-                <ValidationError
-                hasChanged={form.apresentacao.hasChanged}
-                errorMessage='Apresentação é obrigatório'
-                testId='apres-required'
-                type='required'
-                value={form.apresentacao.value}/>
-                </div>
-                
-                <div>              
-                <label htmlFor='descricao'>Descrição:</label>
-                <input className='criador'
-                type='text'
-                required
-                name='descricao'
-                placeholder='Descrição'
-                onChange={event => setForm({...form, descricao: {
-                  hasChanged: true, value: event.target.value
-                  }})}
-                /><br></br><br></br>
-                </div>
-                
-                <div>                            
-                <label htmlFor='preco'>Preço médio</label>
-                <input className='criador'
-                type="text"
-                required
-                name='preco'
-                placeholder='Preço'
-                onChange={event => setForm({...form, preco: {
-                  hasChanged: true, value: event.target.value
-                  }})}
-                /><br></br><br></br>
-                <ValidationError
-                hasChanged={form.preco.hasChanged}
-                errorMessage='Preço é obrigatório'
-                testId='preco-required'
-                type='required'
-                value={form.preco.value}/>
-                </div>
+                }
+              })}
+            />
+            <ValidationError
+              hasChanged={form.laboratorio.hasChanged}
+              errorMessage='Laboratório é obrigatório'
+              testId='labor-required'
+              type='required'
+              value={form.laboratorio.value} />
+          </div>
 
-                <button type='button'
-                disabled={!form.nome.value || !form.laboratorio.value || 
-                   !form.substancias.value || !form.indicacao.value || 
-                  !form.apresentacao.value || !form.preco.value } 
-                className='solid'
-                onClick={handleClick}
-                >
-                Enviar
-                </button>                   
-                </form>
-                { showLoading && <Loading /> }               
-            </main>         
-        </body> 
-    </>       
-  )     
+          <div>
+            <label >Indicação *</label>
+            <input className='create'
+              type='text'
+              name='indicacao'
+              placeholder='Ex: Asma, tosse, coração'
+              onChange={event => setForm({
+                ...form, indicacao: {
+                  hasChanged: true, value: event.target.value
+                }
+              })}
+            />
+            <ValidationError
+              hasChanged={form.indicacao.hasChanged}
+              errorMessage='Indicação é obrigatório'
+              testId='indicacao-required'
+              type='required'
+              value={form.indicacao.value} />
+          </div>
+
+          <div>
+            <label htmlFor='substancia'>Substâncias *</label>
+            <input className='create'
+              type='text'
+              name="substancia"
+              placeholder='Substâncias utilizadas'
+              onChange={event => setForm({
+                ...form, substancia: {
+                  hasChanged: true, value: event.target.value
+                }
+              })}
+            />
+            <ValidationError
+              hasChanged={form.substancia.hasChanged}
+              errorMessage='Substâncias é obrigatório'
+              testId='subst-required'
+              type='required'
+              value={form.substancia.value} />
+          </div>
+
+          <div>
+            <label htmlFor='tarja'>Tarja</label>
+            <input className='create'
+              type='text'
+              name='tarja'
+              placeholder='Cor da tarja ou Sem tarja'
+              onChange={event => setForm({
+                ...form, tarja: {
+                  hasChanged: true, value: event.target.value
+                }
+              })}
+            />
+          </div>
+
+          <div>
+            <label htmlFor='apresentacao'>Apresentação *</label>
+            <input className='create'
+              type='text'
+              name='apresentacao'
+              placeholder='Ex: Comprimido, injetável ou líquido, qtd: 20ml'
+              onChange={event => setForm({
+                ...form, apresentacao: {
+                  hasChanged: true, value: event.target.value
+                }
+              })}
+            />
+            <ValidationError
+              hasChanged={form.apresentacao.hasChanged}
+              errorMessage='Apresentação é obrigatório'
+              testId='apres-required'
+              type='required'
+              value={form.apresentacao.value} />
+          </div>
+
+          <div>
+            <label htmlFor='descricao'>Descrição</label>
+            <input className='create'
+              type='text'
+              name='descricao'
+              placeholder='Descreva a respeito - Opcional'
+              onChange={event => setForm({
+                ...form, descricao: {
+                  hasChanged: true, value: event.target.value
+                }
+              })}
+            />
+          </div>
+          <div>
+            <label>Tipo de Moeda *</label>
+            <select
+              name='currency'
+              id='currency'
+              onChange={event => setForm({
+                ...form, currency: {
+                  hasChanged: true, value: event.target.value
+                }
+              })}
+            > <option value=''>-- Escolha a Moeda --</option>
+              <option value='BRL'>Real</option>
+              <option value='USD'>Dolar</option>
+              <option value='EUR'>Euro</option>
+            </select>
+            <ValidationError
+              hasChanged={form.currency.hasChanged}
+              errorMessage='Moeda é obrigatório'
+              testId='moeda-required'
+              type='required'
+              value={form.currency.value} />
+          </div>
+
+          <div>
+            <label htmlFor='preco'>Preço *</label>
+            <input className='create'
+              type="number"
+              name='value'
+              id='value'
+              placeholder='Use o ponto para centavos - Ex: 26.90'
+              onChange={event => setForm({
+                ...form, value: {
+                  hasChanged: true, value: event.target.value
+                }
+              })}
+            />
+            <ValidationError
+              hasChanged={form.value.hasChanged}
+              errorMessage='Preço é obrigatório'
+              testId='value-required'
+              type='required'
+              value={form.value.value} />
+            <ValidationError
+              errorMessage="O valor deve ser maior ou igual a zero"
+              hasChanged={form.value.hasChanged}
+              testId="preco-invalid"
+              type="invalid"
+              value={form.value.value}
+            />
+          </div>
+
+          <div>
+            <label htmlFor='atualizado'>Data *</label>
+            <input className='create'
+              type="date"
+              name='atualizado'
+              onChange={event => {
+                const selectedDate = (event.target.value);
+                const minDate = new Date('2022-01-01');
+                const currentDate = new Date(selectedDate);
+                const isDateValid = selectedDate !== '' && currentDate >= minDate;
+                setForm({
+                  ...form,
+                  atualizado: {
+                    hasChanged: true,
+                    value: event.target.value,
+                    isDateValid: isDateValid
+                  }
+                })
+              }}
+            />
+            <ValidationError
+              hasChanged={form.atualizado.hasChanged}
+              errorMessage='Data obrigatória/inválida'
+              testId='data-required'
+              type='required'
+              value={form.atualizado.value}
+            />
+            <ValidationError
+              hasChanged={form.atualizado.hasChanged}
+              errorMessage='Data deve ser superior a 2022'
+              testId='data-invalid'
+              type='date'
+              value={form.atualizado.value}
+            />
+          </div>
+
+          <button type='button'
+            disabled={!form.type.value || !form.nome.value || !form.laboratorio.value ||
+              !form.atualizado.isDateValid || !form.substancia.value || !form.indicacao.value ||
+              !form.apresentacao.value || !form.value.value || !form.currency.value}
+            className='solid'
+            onClick={handleClick}>
+            Enviar
+          </button>
+
+          <button type='button'
+            className='outline'
+            onClick={cancelClick}>
+            Cancelar
+          </button>
+        </form>
+        {showLoading && <Loading />}
+      </main>
+    </>
+  )
 }
 export default CreatePage;

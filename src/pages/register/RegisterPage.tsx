@@ -59,6 +59,7 @@ function RegisterPage() {
 
             {/*-----------------------------------------*/}  
             <input
+            className='register'
             type="text"
             name="email"
             id="email"
@@ -83,7 +84,8 @@ function RegisterPage() {
             value={form.email.value}/>
 
             {/*-----------------------------------------*/}        
-            <input 
+            <input
+            className='register' 
             type="password" 
             placeholder='Senha' 
             value={form.password.value}

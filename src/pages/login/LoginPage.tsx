@@ -70,6 +70,7 @@ function LoginPage() {
         {/*-----------------------------------------*/}
        
             <input
+              className='login'
               type="email"
               placeholder='Email'
               value={form.email.value}
@@ -98,6 +99,7 @@ function LoginPage() {
         {/*-----------------------------------------*/}
         
           <input
+            className='login'
             type="password"
             placeholder='Senha'
             value={form.password.value}

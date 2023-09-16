@@ -27,6 +27,7 @@ form {
   display: flex;
   flex-direction: column;
   margin: 0x auto;
+  width: 300px;
 }
 
 h1,
@@ -56,17 +57,11 @@ button {
   outline: none;
   padding: 10px;
   width: webkit-fill-available;
-  margin-bottom: 10px;
 }
 
 input {
   background-color: #fcfcfc;
   border: none;
-}
-
-input.criador {
-  margin-top: 0;
-  margin-bottom: 10px;
 }
 
 input.container {
@@ -98,6 +93,8 @@ button.solid {
   background: white;
   border: none;
   color: rgb(45, 211, 211);
+  margin-top: 20px;
+
 }
 
 button.solid_consult {
