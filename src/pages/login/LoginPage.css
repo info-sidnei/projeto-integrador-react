@@ -1,7 +1,7 @@
 main {
     min-height: 70vh;
   }
-  
-  form {
-      width: 300px;
+
+  .login {
+    margin-top: 10px;
   }
