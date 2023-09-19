@@ -1,12 +1,13 @@
 .menu-container {
     display: flex;
-    justify-content: right;
+    justify-content: center;
     background: #054a4a;
 }
 
 .menu-container button {
-    margin: 5px;
+    margin: 5px 30px;
     width: auto;
+    font-size: 20px;
 }
 
 .search {
