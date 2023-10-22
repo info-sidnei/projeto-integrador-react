@@ -1,35 +1,74 @@
 import { db } from '../../FirestoreConfig';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDoc, getDocsFromServer } from "firebase/firestore";
 import Loading from '../../components/loading/Loading';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthService from '../../services/AuthService';
-import { useAuthContext } from '../../contexts/auth/AuthContext';
-import './CreatePage.css';
+import './AdmCreatePage.css'
 import ValidationError from "../../components/validation-error/ValidationError";
 import { auth } from '../../FirebaseConfig';
-import { Select } from '@mui/material';
+import { HeaderSuperUser } from '../../components/headeruser/HeaderSuperUser';
+import { ITask } from '../../interfaces/Task';
+//import TaskForm from '../../components/TaskForm';
+//import Modal from '../../components/Modal';
 
 function CreatePage() {
 
-  const { authService }: { authService: AuthService } = useAuthContext();
+  const [taskList, setTaskList] = useState<ITask[]>([])
+  const [taskToUpdate, setTaskToUpdate] = useState<ITask | null>(null);
 
   const navigate = useNavigate();
 
-  const home = () => { navigate('/home'); }
+  // const hideOrShowModal = (display: boolean) => {
+  //   const modal = document.querySelector('#modal');
+  //   if (display) {
+  //     modal!.classList.remove('hide');
+  //   } else {
+  //     modal!.classList.add('hide');
+  //   }
+  // }
 
-  const read = () => { navigate('/read'); }
+  // const editTask = (task: ITask): void => {
+  //   hideOrShowModal(true);
+  //   setTaskToUpdate(task);
+  // }
 
-  const update = () => { navigate('/update'); }
+  // const updateTask = (
+  //   docid: number,
+  //   type: string,
+  //   nome: string,
+  //   laboratorio: string,
+  //   indicacao: string,
+  //   substancia: string,
+  //   tarja: string,
+  //   apresentacao: string,
+  //   descricao: string,
+  //   currency: string,
+  //   value: string,
+  //   atualizado: string,
+  //   uid: string
+  // ) => {
+  //   const updatedTask: ITask = {
+  //     docid,
+  //     type,
+  //     nome,
+  //     laboratorio,
+  //     indicacao,
+  //     substancia,
+  //     tarja,
+  //     apresentacao,
+  //     descricao,
+  //     preco: { currency, value },
+  //     atualizado,
+  //     uid
+  //   }
+  //   const updatedItems = taskList.map((task) => {
+  //     return task.docid === updatedTask.docid ? updatedTask : task
+  //   });
 
-  const deletar = () => { navigate('/delete'); }
+  //   setTaskList(updatedItems);
 
-  const logout = () => {
-    authService.logout()
-    .then(() => {
-      navigate('/');
-    })
-  }
+  //   hideOrShowModal(false);
+  // };
 
   //-------------------------------------------------//
 
@@ -65,13 +104,18 @@ function CreatePage() {
   const currency = form.currency.value;
   const value = parseFloat(form.value.value);
   const atualizado = form.atualizado.value;
+  const docid = Math.floor(Math.random() * 1000);
 
   const [error, setError] = useState(null as any);
   const [showLoading, setShowLoading] = useState(false);
 
   const cancelClick = () => {
-    console.log(form)
-    console.log(type, nome, laboratorio, indicacao, substancia, tarja, apresentacao, descricao, currency, value, atualizado)
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
+    Array.from(document.querySelectorAll("select")).forEach(
+      select => (select.value = "")
+    );
   }
 
   const handleClick = async () => {
@@ -94,11 +138,12 @@ function CreatePage() {
       atualizado: atualizado,
       user: {
         uid: auth.currentUser.uid
-      }
+      },
+      docid: docid
     }).then(() => {
       setShowLoading(false)
       alert('Dados Cadastrados com sucesso!');
-      navigate('../create');
+      navigate('../adminpages/admcreate');
 
     }).catch(error => {
       setShowLoading(false)
@@ -115,18 +160,20 @@ function CreatePage() {
 
   return (
     <>
-
-      <header>
-        <div className='menu-container'>
-          <button className='clear' onClick={home}>Home</button>
-          <button className='clear' onClick={read}>Pesquisar</button>
-          <button className='clear' onClick={update}>Update</button>
-          <button className='clear' onClick={deletar}>Deletar</button>
-          <button className='clear' onClick={logout}>Sair</button>
-        </div>
-      </header>
-      <main className='createlize'>
+      {/* <Modal
+        children={<TaskForm
+          btnText='Editar produtos'
+          taskList={taskList}
+          task={taskToUpdate}
+          handleUpdate={updateTask}
+        />
+        }
+      /> */}
+      <HeaderSuperUser />
+      <main className='createlize_creative'>
+        <div>
         <h1>Bem vindo ao PharmaPlain!</h1>
+        </div>
         <div >
           <h2>Adicione um novo produto:</h2>
         </div>

@@ -1,22 +1,20 @@
-import Loading from "../../components/loading/Loading";
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../contexts/auth/AuthContext';
-import AuthService from '../../services/AuthService';
+import React, { useState } from 'react';
 import { db } from '../../FirestoreConfig';
-import { HeaderUser } from "../../components/headeruser/HeaderUser";
-import { orderBy, query, collection, where, getDocs } from 'firebase/firestore';
-import './ReadPage.css'
+import { orderBy, query, collection, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import './AdmReadPage.css'
+import { HeaderSuperUser } from '../../components/headeruser/HeaderSuperUser';
+import Loading from '../../components/loading/Loading';
 
-function ReadPage() {
-
+function ReadPageAdmin() {
   const [showLoading, setShowLoading] = useState(false);
+
   const [searchInput, setSearchInput] = useState({
     search: {
       hasChanged: false,
       value: ''
     },
   });
+
   const handleSelectChange = () => {
     setSearchInput({
       search: {
@@ -25,6 +23,7 @@ function ReadPage() {
       }
     });
   };
+
   const handleInputChange = (event: any) => {
     setSearchInput({
       search: {
@@ -46,7 +45,6 @@ function ReadPage() {
 
   var select = document.querySelector<HTMLSelectElement>('select');
   var selectValue = select?.value;
-
   var isDataLoaded = false;
 
   function cleanScreen() {
@@ -60,7 +58,6 @@ function ReadPage() {
   const findTransactions = async () => {
     try {
       if (!isDataLoaded) {
-
         if (selectValue === 'nome') {
           const querySnapshot = query(collection(db, 'medicamentos'),
             where('nome', '==', hasOnChanged),
@@ -113,9 +110,10 @@ function ReadPage() {
     orderedList!.innerHTML = '';
 
     container.forEach((transaction: any) => {
-      console.log(transaction);
+      console.log(transaction.uid);
       const li = document.createElement('li');
       li.classList.add(transaction.type);
+      li.id = transaction.uid;
 
       const lblNome = document.createElement('p');
       lblNome.innerHTML = 'nome';
@@ -130,7 +128,6 @@ function ReadPage() {
       const laboratorio = document.createElement('li');
       laboratorio.innerHTML = transaction.laboratorio;
       li.appendChild(laboratorio);
-
 
       const lblIndicacao = document.createElement('p')
       lblIndicacao.innerHTML = 'Indicação';
@@ -181,14 +178,59 @@ function ReadPage() {
       atualizado.innerHTML = formatData(transaction.atualizado);
       li.appendChild(atualizado);
 
+      // const lblUid = document.createElement('p')
+      // lblUid.innerHTML = 'UID';
+      // li.appendChild(lblUid);
+      // const uid = document.createElement('li');
+      // uid.innerHTML = transaction.uid;
+      // li.appendChild(uid);
+
       orderedList!.appendChild(li);
 
       const br = document.createElement('br');
       br.classList.add(transaction.type);
       orderedList!.appendChild(br);
 
-    });
+      const deleteButton = document.createElement('button');
+      deleteButton.innerHTML = 'Remover';
+      deleteButton.classList.add('outline', 'danger');
+      deleteButton.addEventListener('click', event => {
+        event.stopPropagation();
+        const confirm = event.view?.confirm('Deseja Remover este item?');
+        if (confirm === true) {
+          removeTransaction(transaction)
+        }
+      })
+      li.appendChild(deleteButton);
 
+      // const updateButton = document.createElement('button');
+      // updateButton.innerHTML = 'Alterar';
+      // updateButton.classList.add('outline', 'caution');
+      // updateButton.addEventListener('click', event => {
+      //   event.stopPropagation();
+      //   window.location.href = '../adminpages/admupdate?uid=' + transaction.uid
+      // })
+      // li.appendChild(updateButton);
+    });
+  }
+
+  const removeTransaction = async (transaction: any) => {
+    setShowLoading(true);
+
+    const docUid = doc(db, 'medicamentos', transaction.uid);
+    const docSnap = await deleteDoc(docUid)
+      .then(() => {
+        setShowLoading(false);
+        document.getElementById(transaction.uid)?.remove();
+        document.querySelectorAll("input").forEach(
+          input => (input.value = "")
+        );
+      })
+      .catch(error => {
+        setShowLoading(false);
+        console.log(error);
+        alert('Erro ao remover item');
+      });
   }
 
   function formatData(atualizado: string) {
@@ -208,17 +250,13 @@ function ReadPage() {
 
   return (
     <div>
-      <HeaderUser />
+      <HeaderSuperUser />
       <main className='readsearch'>
-        <div>
-          <h1>PharmaPlain, informação a um Clique.</h1>
-        </div>
-        <div>
-          <h2>Escolha o método de pesquisa:</h2>
-        </div>
+        <h1>PharmaPlain, informação a um Clique.</h1>
+        <h2>Escolha o método de pesquisa:</h2>
         <form className='search'>
           <div>
-            <select className="select" id='select' name='select' onChange={handleSelectChange}>
+            <select className='select' id='select' name='select' onChange={handleSelectChange}>
               <option value='nome'>Nome do remédio</option>
               <option value='laboratorio'>Nome do laboratório</option>
               <option value='indicacao'>Uso ou indicação</option>
@@ -226,9 +264,9 @@ function ReadPage() {
           </div>
           <div>
             <input
-              className='search'
               type="text"
               placeholder='Digite a pesquisa'
+              className='search'
               name='search'
               value={searchInput.search.value}
               onChange={handleInputChange}
@@ -248,6 +286,7 @@ function ReadPage() {
       </div>
       <ol id="container"></ol>
     </div>
+
   )
 }
-export default ReadPage;
+export default ReadPageAdmin;

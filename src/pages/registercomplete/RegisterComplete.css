@@ -1,0 +1,56 @@
+.perfil {    
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+}
+
+.perfil h1 {
+    text-align: center;    
+    min-width: 330px;
+}
+
+.perfil h4 {
+    text-align: center;
+    min-width: 300px;
+}
+.perfil input {
+    width: 289px;
+    margin-top: 10px;
+}
+
+.perfil button {
+    width: 310px;
+}
+
+/*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
+@media screen and (max-width: 360px) {
+    .perfil {    
+        margin-bottom: 200px;
+    }
+}
+
+@media screen and (max-width:302px) {
+    .perfil {    
+        margin-bottom: 280px;
+    }    
+}
+
+@media screen and (max-width: 244px) {
+
+    .perfil {    
+        margin-bottom: 300px;
+    } 
+
+    .perfil input {
+        width: 179px;
+        margin-top: 10px;
+    }    
+    .perfil button {
+        width: 199px;
+        margin-left: 0px;
+    }
+  }

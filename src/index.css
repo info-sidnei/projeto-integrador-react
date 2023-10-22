@@ -26,7 +26,7 @@ code {
 form {
   display: flex;
   flex-direction: column;
-  margin: 0x auto;
+  margin: 0 auto;
   width: 300px;
 }
 
@@ -47,11 +47,12 @@ h6 {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 100px;
   text-align: center;
 }
 
-input, select,
+input,
+select,
 button {
   display: block;
   outline: none;
@@ -82,6 +83,7 @@ button.clear {
   background: none;
   border: none;
   color: white;
+  margin-top: 10px;
 }
 
 button:disabled {
@@ -94,7 +96,6 @@ button.solid {
   border: none;
   color: rgb(45, 211, 211);
   margin-top: 20px;
-
 }
 
 button.solid_consult {
@@ -112,8 +113,57 @@ button.createdata {
   text-transform: uppercase;
 }
 
+button.updatedata {
+  margin: 12px 20px 12px 10px;
+  padding: 4px;
+  width: 100px;
+  height: 38px;
+  background: rgb(26, 86, 228);
+  border: 1px solid #b1b1b1;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 16px;
+}
+
+button.updatedata:hover {
+  margin: 12px 20px 12px 10px;
+  padding: 4px;
+  width: 100px;
+  height: 38px;
+  background: rgb(21, 70, 186);
+  border: 1px solid #b1b1b1;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 16px;
+}
+
+button.updateclose {
+  margin: 12px 0px 12px 0px;
+  padding: 4px;
+  width: 80px;
+  height: 38px;
+  background: rgb(131, 135, 143);
+  border: 1px solid #b1b1b1;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 16px;
+}
+
+button.updateclose:hover {
+  margin: 12px 0px 12px 0px;
+  padding: 4px;
+  width: 80px;
+  height: 38px;
+  background: rgb(101, 104, 110);
+  border: 1px solid #b1b1b1;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 16px;
+}
+
 button.consultdata {
-  width: 500px;
+  width: auto;
+  min-width: 200px;
   opacity: 0.5;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -124,7 +174,8 @@ button.consultdata {
 }
 
 button.consultdata:hover {
-  width: 500px;
+  width: auto;
+  min-width: 200px;
   opacity: 0.9;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -143,6 +194,17 @@ button.outline {
   background: none;
   border: 1px solid white;
   color: white;
+  margin-top: 10px;
+}
+
+.outline.danger {
+  color: red;
+  border-color: red;
+}
+
+.outline.caution {
+  color: green;
+  border-color: green;
 }
 
 div.home {
@@ -150,7 +212,7 @@ div.home {
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  width: 40%;
+  width: 60%;
   height: 100%;
 }
 
@@ -158,10 +220,200 @@ div.cadastro {
   margin-top: 20px;
   text-align: center;
   color: white;
+}
 
+.erro {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: #000;
+  min-height: 50vh;
+  margin-top: 20%;
+  font-weight: bold;
+  font-size: 24px;
 }
 
 label.lat {
   text-align: left;
-  font-weight:bold;
+  font-weight: bold;
+}
+
+.menu-container {
+  display: flex;
+  justify-content: right;
+  background: #054a4a;
+  margin-bottom: 70px;
+  padding: 8px;
+  border-bottom: 3px solid #fcfcfc;
+}
+
+.menu-container button {
+  margin: 5px;
+  width: auto;
+}
+
+.hide {
+  display: none !important;
+}
+
+/* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx */
+@media screen and (max-width: 964px) {
+  .container {
+    width: 100%;
+    flex-direction: calc(33.33%);
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .container {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 30px;
+    margin: 0px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+
+  .centralize {
+    margin-top: 30px;
+    margin-bottom: 280px;
+    text-align: justify;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    margin: 0px;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .menu-container {
+    padding: 20px;
+    border-bottom: 3px solid #fcfcfc;    
+  }
+
+  form {
+    margin: 0 auto;
+    max-width: 260px;
+  }
+
+  input {
+    margin-right: 10px;
+    max-width: 244px;
+  }
+
+  button {
+    max-width: 263px;
+    margin-left: 0px;
+    margin-right: 10px;
+  }
+
+  button.solid {
+    width: 250px;
+    margin-left: 0px;
+  }
+
+  button.consultdata {
+    max-width: 245;
+    margin-left: 0px;
+    margin-right: 10px;
+  }
+
+  button.consultdata:hover {
+    max-width: 245;
+    margin-left: 0px;
+    margin-right: 10px;
+  }
+
+  div.home {
+    width: 60%;
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 302px) {
+
+  .centralize {
+    margin-top: 10px;
+    margin-bottom: 280px;
+    text-align: justify;
+  }
+
+  form {
+    margin: 0 auto;
+    max-width: 220px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 22px;
+    margin: 0px;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 18px;
+  }
+
+  input {
+    margin-right: 10px;
+    max-width: 204px;
+  }
+
+  button {
+    max-width: 224px;
+    margin-left: 0px;
+    margin-right: 10px;
+  }
+
+  button.solid {
+    max-width: 211px;
+    margin-left: 0px;
+    margin-right: 10px;
+  }
+
+  button.consultdata {
+    max-width: 205;
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+
+  button.consultdata:hover {
+    max-width: 205;
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+
+  div.home {
+    width: 90%;
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 244px) {
+
+  h1 {
+    font-size: 20px;
+    margin: 0px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  button.consultdata {
+    max-width: 185;
+  }
+
+  button.consultdata:hover {
+    max-width: 185;
+  }
 }
