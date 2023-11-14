@@ -16,73 +16,13 @@ import { DrawerProvider } from './contexts';
 
 
 function App() {
-
    const { isLoadingLoggedUser, user } = useAuthContext();
 
    return (
       <>
          <div>
             <main>
-               {!isLoadingLoggedUser &&
-                  <DrawerProvider>
-                     <BrowserRouter>
-                        <Header />
-                        <Routes>
-                           <Route path='/'
-                              element={
-                                 !user ? <LoginPage />
-                                    : <Navigate to={'/home'} />
-                              }
-                           />
-                           <Route path='/login'
-                              element={
-                                 !user ? <LoginPage />
-                                    : <Navigate to={'/home'} />
-                              }
-                           />
-                           <Route path='/home'
-                              element={
-                                 user ? <HomePage />
-                                    : <Navigate to={'/'} />
-                              }
-                           />
-                           <Route path='/register'
-                              element={
-                                 !user ? <RegisterPage />
-                                    : <Navigate to={'/home'} />
-                              }
-                           />
-                           <Route path='/read'
-                              element={
-                                 user ? <ReadPage />
-                                    : <Navigate to={'/'} />
-                              }
-                           />
-
-                           {/*Criar Regra para somente admin*/}
-                           <Route path='/delete'
-                              element={
-                                 user ? <DeletePage />
-                                    : <Navigate to={'/'} />
-                              }
-                           />
-                           <Route path='/update'
-                              element={
-                                 user ? <UpdatePage />
-                                    : <Navigate to={'/'} />
-                              }
-                           />
-                           <Route path='/create'
-                              element={
-                                 user ? <CreatePage />
-                                    : <Navigate to={'/'} />
-                              }
-                           />
-                        </Routes>
-                        <Footer />
-                     </BrowserRouter>
-                  </DrawerProvider>
-               }
+               <Rotas />
             </main>
             {isLoadingLoggedUser && <Loading />}
          </div>
