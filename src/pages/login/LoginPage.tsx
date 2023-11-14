@@ -1,10 +1,11 @@
 import { isEmailValid } from './../../helpers/EmailHelper';
 import Loading from '../../components/loading/Loading';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AuthService from '../../services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/auth/AuthContext';
 import ValidationError from './../../components/validation-error/ValidationError';
+import Rotas from '../../components/Rotas';
 import './LoginPage.css';
 import { auth } from '../../FirebaseConfig';
 import { collection, getDocs, query, where } from 'firebase/firestore';

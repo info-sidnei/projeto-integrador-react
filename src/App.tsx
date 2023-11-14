@@ -5,7 +5,6 @@ import Rotas from './components/Rotas';
 import VLibras from '@djpfs/react-vlibras';
 
 function App() {
-
    const { isLoadingLoggedUser, user } = useAuthContext();
 
    return (
@@ -13,7 +12,7 @@ function App() {
          <div>
             <VLibras forceOnload={true} />
             <main>
-              <Rotas />
+               <Rotas />
             </main>
             {isLoadingLoggedUser && <Loading />}
          </div>
