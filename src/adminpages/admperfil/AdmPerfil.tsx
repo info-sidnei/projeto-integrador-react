@@ -25,7 +25,7 @@ function RegisterComplete() {
   const firstname = form.firstname.value;
   const lastname = form.lastname.value;
   const age = parseInt(form.age.value);
-  const isAdmin = false;
+  const type = 'notAdmin';
   const uid = auth.currentUser.uid
 
   const regComplete = async () => {
@@ -36,7 +36,7 @@ function RegisterComplete() {
       firstname: firstname,
       lastname: lastname,
       age: age,
-      isAdmin: isAdmin,
+      type: type,
       user: {
         uid: uid
       }

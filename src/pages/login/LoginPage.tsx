@@ -53,7 +53,7 @@ function LoginPage() {
           console.log(type)
           if (type === "Admin") {
             navigate('../../adminpages/admhome');
-          } else {
+          } else if (!type || type !== "Admin") {
             navigate('../home')
           }
         })

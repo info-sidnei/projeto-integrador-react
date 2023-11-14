@@ -56,7 +56,9 @@ const Rotas = () => {
       if (await user && type === "Admin") {
          console.log(type)
          notAdmin(true)
-      } else if (await user && type === "notAdmin") {
+      } else if (await user && !type) {
+         notAdmin(false)
+      } else if (await user && type !== "Admin") {
          notAdmin(false)
       }
    }
@@ -72,7 +74,7 @@ const Rotas = () => {
 
                      <Route path='/' element={user && Admin ? <AdmHomePage /> : user && !Admin ? <HomePage /> : <LoginPage />} />
                      <Route path='/login' element={user && Admin ? <AdmHomePage /> : user && !Admin ? <HomePage /> : <LoginPage />} />
-                     <Route path='/home' element={user && Admin ? <AdmHomePage /> : user && !Admin ? <HomePage /> : <Navigate to={'/'} />} /> 
+                     <Route path='/home' element={user && Admin ? <AdmHomePage /> : user && !Admin ? <HomePage /> : <Navigate to={'/'} />} />
                      <Route path='/register' element={user && Admin ? <AdmHomePage /> : user && !Admin ? <HomePage /> : <RegisterPage />} />
                      <Route path='/registercomplete' element={user && Admin ? <AdmPerfil /> : user && !Admin ? <RegisterComplete /> : <Navigate to={'/'} />} />
                      <Route path='/read' element={user && Admin ? <AdmReadPage /> : user && !Admin ? <ReadPage /> : <Navigate to={'/'} />} />
