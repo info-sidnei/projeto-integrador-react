@@ -1,4 +1,5 @@
 import './HomePage.css';
+import { useAuthContext } from '../../contexts/auth/AuthContext';
 import AuthService from '../../services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import VLibras from '@djpfs/react-vlibras';
