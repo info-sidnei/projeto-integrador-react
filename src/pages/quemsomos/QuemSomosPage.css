@@ -1,0 +1,38 @@
+.centralize_qsomos {
+  display: flex; 
+  margin-top: 20px;
+  margin-bottom: 200px;
+}
+
+.centralize_qsomos form {
+  display: flex;
+  align-items: center;
+  width: 800px;
+  margin-top: 20px;
+}
+
+.q_somos p {
+  margin: 15px 5px 10px 5px;
+  color: #fcfcfc;
+  text-align: justify;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 15px;
+}
+/*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
+@media screen and (max-width: 360px) {
+
+  .centralize_qsomos {
+    margin-top: 50px;
+    margin-bottom: 100px;
+  }
+  
+  .q_somos p {
+    width: 100%;
+    margin: 15px 25px 10px 0px;
+    color: #fcfcfc;
+    text-align: justify;
+    font-size: 20px;
+    font-weight: 600;
+  }
+}

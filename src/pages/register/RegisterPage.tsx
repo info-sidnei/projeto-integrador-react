@@ -34,7 +34,7 @@ function RegisterPage() {
         .then(() => {
          setShowLoading(false)
          alert("O usuário foi criado com sucesso!")
-         navigate('/');
+         navigate('/registercomplete');
         })
         .catch(error => {
          setShowLoading(false)

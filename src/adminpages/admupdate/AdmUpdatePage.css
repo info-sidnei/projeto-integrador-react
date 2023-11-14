@@ -1,0 +1,38 @@
+.createlize {
+  background: rgb(45, 211, 211);
+  ;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3px;
+  margin-bottom: 0px;
+}
+
+.create div {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.create label {
+  font-weight: 700;
+  text-align: left;
+}
+
+.create input {
+  justify-content: center;
+  width: 284px;
+  padding: 8px;
+  background: #eee;
+  border: 1px solid #ccc;
+  margin-bottom: -10px;
+}
+
+.create select {
+  justify-content: center;
+  width: 300px;
+  padding: 8px;
+  background: #eee;
+  border: 1px solid #ccc;
+  margin-bottom: -10px;
+}

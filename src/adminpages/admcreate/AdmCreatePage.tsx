@@ -1,37 +1,16 @@
 import { db } from '../../FirestoreConfig';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc} from "firebase/firestore";
 import Loading from '../../components/loading/Loading';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthService from '../../services/AuthService';
-import { useAuthContext } from '../../contexts/auth/AuthContext';
-import './CreatePage.css';
+import './AdmCreatePage.css'
 import ValidationError from "../../components/validation-error/ValidationError";
 import { auth } from '../../FirebaseConfig';
-import { Select } from '@mui/material';
+import { HeaderSuperUser } from '../../components/headeruser/HeaderSuperUser';
 
 function CreatePage() {
 
-  const { authService }: { authService: AuthService } = useAuthContext();
-
-  const navigate = useNavigate();
-
-  const home = () => { navigate('/home'); }
-
-  const read = () => { navigate('/read'); }
-
-  const update = () => { navigate('/update'); }
-
-  const deletar = () => { navigate('/delete'); }
-
-  const logout = () => {
-    authService.logout()
-    .then(() => {
-      navigate('/');
-    })
-  }
-
-  //-------------------------------------------------//
+  const navigate = useNavigate(); 
 
   interface FormData {
     hasChanged: boolean;
@@ -50,7 +29,7 @@ function CreatePage() {
     descricao: { hasChanged: false, value: "" },
     currency: { hasChanged: false, value: "" },
     value: { hasChanged: false, value: "" },
-    atualizado: { hasChanged: false, value: "" } as FormData
+    data: { hasChanged: false, value: "" } as FormData
   })
 
 
@@ -64,14 +43,18 @@ function CreatePage() {
   const descricao = form.descricao.value;
   const currency = form.currency.value;
   const value = parseFloat(form.value.value);
-  const atualizado = form.atualizado.value;
+  const data = form.data.value;
 
   const [error, setError] = useState(null as any);
   const [showLoading, setShowLoading] = useState(false);
 
   const cancelClick = () => {
-    console.log(form)
-    console.log(type, nome, laboratorio, indicacao, substancia, tarja, apresentacao, descricao, currency, value, atualizado)
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
+    Array.from(document.querySelectorAll("select")).forEach(
+      select => (select.value = "")
+    );
   }
 
   const handleClick = async () => {
@@ -91,14 +74,16 @@ function CreatePage() {
         currency: currency,
         value: value
       },
-      atualizado: atualizado,
+      data: data,
       user: {
         uid: auth.currentUser.uid
-      }
+      },
+    
     }).then(() => {
       setShowLoading(false)
       alert('Dados Cadastrados com sucesso!');
-      navigate('../create');
+      navigate('../adminpages/admcreate');
+      
 
     }).catch(error => {
       setShowLoading(false)
@@ -115,18 +100,11 @@ function CreatePage() {
 
   return (
     <>
-
-      <header>
-        <div className='menu-container'>
-          <button className='clear' onClick={home}>Home</button>
-          <button className='clear' onClick={read}>Pesquisar</button>
-          <button className='clear' onClick={update}>Update</button>
-          <button className='clear' onClick={deletar}>Deletar</button>
-          <button className='clear' onClick={logout}>Sair</button>
+      <HeaderSuperUser />
+      <main className='createlize_creative'>
+        <div>
+        <h1>PharmaPlain Controle!</h1>
         </div>
-      </header>
-      <main className='createlize'>
-        <h1>Bem vindo ao PharmaPlain!</h1>
         <div >
           <h2>Adicione um novo produto:</h2>
         </div>
@@ -136,7 +114,7 @@ function CreatePage() {
             <select
               name='type'
               id='type'
-              onChange={event => setForm({
+              onChange={ event => setForm({
                 ...form, type: {
                   hasChanged: true, value: event.target.value
                 }
@@ -340,10 +318,10 @@ function CreatePage() {
           </div>
 
           <div>
-            <label htmlFor='atualizado'>Data *</label>
+            <label htmlFor='data'>Data *</label>
             <input className='create'
               type="date"
-              name='atualizado'
+              name='data'
               onChange={event => {
                 const selectedDate = (event.target.value);
                 const minDate = new Date('2022-01-01');
@@ -351,7 +329,7 @@ function CreatePage() {
                 const isDateValid = selectedDate !== '' && currentDate >= minDate;
                 setForm({
                   ...form,
-                  atualizado: {
+                  data: {
                     hasChanged: true,
                     value: event.target.value,
                     isDateValid: isDateValid
@@ -360,24 +338,24 @@ function CreatePage() {
               }}
             />
             <ValidationError
-              hasChanged={form.atualizado.hasChanged}
+              hasChanged={form.data.hasChanged}
               errorMessage='Data obrigatória/inválida'
               testId='data-required'
               type='required'
-              value={form.atualizado.value}
+              value={form.data.value}
             />
             <ValidationError
-              hasChanged={form.atualizado.hasChanged}
+              hasChanged={form.data.hasChanged}
               errorMessage='Data deve ser superior a 2022'
               testId='data-invalid'
               type='date'
-              value={form.atualizado.value}
+              value={form.data.value}
             />
           </div>
 
           <button type='button'
             disabled={!form.type.value || !form.nome.value || !form.laboratorio.value ||
-              !form.atualizado.isDateValid || !form.substancia.value || !form.indicacao.value ||
+              !form.data.isDateValid || !form.substancia.value || !form.indicacao.value ||
               !form.apresentacao.value || !form.value.value || !form.currency.value}
             className='solid'
             onClick={handleClick}>

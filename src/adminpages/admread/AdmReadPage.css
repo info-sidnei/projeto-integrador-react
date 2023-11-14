@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: -30px;  
+    margin-top: -60px;  
   }
 
 .search {
@@ -50,9 +50,8 @@
 
 button.danger {
     width: auto;
-    float: right;
+    float: center;
     margin-top: 20px;
-    margin-right: 50px;
 }
 button.caution {
     width: auto;
@@ -102,13 +101,25 @@ ol {
     }
 }
 
-@media screen and (max-width: 340px) {
+@media screen and (max-width: 360px) {
+
+    .readsearch {
+        margin-top: -80px;  
+      }
+
+    .search select {
+        width: 96%;
+    }
+
+    .search input {
+        width: 233px;
+    }
 
     button.danger {
         width: auto;
-        float: right;
+        float: center;
         margin-top: 20px;
-        margin-right: 30px;
+        
     }
     button.caution {
         width: auto;
@@ -126,11 +137,22 @@ ol {
 
 @media screen and (max-width: 302px) {
 
+    .readsearch {
+        margin-top: -110px;  
+      }
+
+    .search select {
+        width: 96%;
+    }
+
+    .search input {
+        width: 194px;
+    }
+
     button.danger {
         width: auto;
-        float: right;
+        float: center;
         margin-top: 20px;
-        margin-right: 10px;
     }
     button.caution {
         width: auto;

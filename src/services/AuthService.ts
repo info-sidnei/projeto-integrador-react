@@ -1,8 +1,6 @@
 import * as firebaseAuth from 'firebase/auth';
 import { auth, } from '../FirebaseConfig';
 
-
-
 export default class AuthService {
 
     getLoggedUser() {
@@ -11,9 +9,7 @@ export default class AuthService {
                 resolve(user);
             })
         })        
-    }
-    
-    
+    }    
 
     login(email: string, password: string) {
         return firebaseAuth.signInWithEmailAndPassword(
