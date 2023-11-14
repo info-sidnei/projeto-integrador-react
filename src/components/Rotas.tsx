@@ -103,4 +103,4 @@ const Rotas = () => {
    );
 }
 
-export default Rotas
+export default Rotas;
