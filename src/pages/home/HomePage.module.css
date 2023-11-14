@@ -1,0 +1,16 @@
+header {
+    text-align: right;
+}
+
+header button {
+    margin: 5px;
+    width: auto;
+}
+
+article {
+  font-weight: bold;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+/*///////////////////////////////////////////////////////////*/

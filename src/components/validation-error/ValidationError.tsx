@@ -5,7 +5,7 @@ import { isBefore, parseISO } from 'date-fns';
 type ValidationErrorProps = {
     errorMessage: string;
     hasChanged: boolean;
-    type: 'required' | 'email' | 'nome' | 'invalid' | 'date';
+    type: 'required' | 'email' | 'nome' | 'invalid' | 'date' | 'age';
     value: string;
     testId: string;
 }
@@ -33,6 +33,11 @@ export default function ValidationError(props: ValidationErrorProps) {
         return ( 
             Number(props.value) < 0 ? error : null
         );
+    }else if (props.type === 'age') {   
+        return (
+            Number(props.value) < 10 ? error : null
+        );
+
     }else if (props.type === 'date') {
         const minDate = parseISO('2022-01-01');
         const currentDate = parseISO(props.value);

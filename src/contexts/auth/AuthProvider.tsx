@@ -13,7 +13,7 @@ export default function AuthProvider(props: AuthProviderProps) {
 
     const [isLoadingLoggedUser, setIsLoadingLoggedUser] = useState(true);
     const [user, setUser] = useState(null as any);
-  
+
     useEffect(() => {
         firebaseAuth.onAuthStateChanged(auth, (user: any) => {
             setIsLoadingLoggedUser(false);

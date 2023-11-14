@@ -1,0 +1,47 @@
+.centralize .notpermission {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background: #040404;
+  opacity: 0.7;
+  border-radius: 14px;
+  margin-top: 30vh;
+  margin-bottom: 30vh;
+}
+.notpermission h2 {
+  color: #fafa0f;
+}
+
+@media screen and (max-width: 619px) {
+  .centralize .notpermission {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 20vh;
+    margin-bottom: 30vh;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .centralize .notpermission {
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 10vh;
+    margin-bottom: 35vh;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .centralize .notpermission {
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 10vh;
+    margin-bottom: 15vh;
+  }
+}

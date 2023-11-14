@@ -1,9 +1,7 @@
 import './HomePage.css';
 import AuthService from '../../services/AuthService';
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../contexts/auth/AuthContext';
-
-
+import VLibras from '@djpfs/react-vlibras';
 
 function HomePage() {
 
@@ -27,8 +25,8 @@ function HomePage() {
   }
 
   const Consult = () => {
-    navigate('../read');
-  }
+    navigate('../read')
+  }  
 
   return (
     <div>
@@ -45,19 +43,24 @@ function HomePage() {
       </div>      
       <main className='centralize'>      
         <h1>Bem vindo ao PharmaPlain!</h1>
+        <div><h2>Adquira aqui informações farmacêuticas!</h2></div>
         <div className='home'>
-        <article>
-          <h2>Adquira aqui informações farmacêuticas!</h2>
-          <p>
-            Tudo que você procura sobre indicação, laboratório, preço médio e 
-            outras curiosidades a respeito de qualquer medicamento disponível 
-            no mercado brasileiro.
-          </p>
-        </article>
-        <button className='consultdata' onClick={Consult}>Consultar</button>
+          <article>            
+            <p>
+              Tudo que você procura sobre indicação, laboratório, preço médio e
+              outras curiosidades a respeito de qualquer medicamento disponível
+              no mercado brasileiro.
+            </p>
+          </article>
+        </div>
+        <div>
+          <button className='consultdata' onClick={Consult}>Consultar</button>
         </div>
       </main>
-    </div>   
+      <div>
+      <VLibras />
+      </div>
+    </div>
   )
 }
 export default HomePage;
